@@ -11,7 +11,7 @@ public class Product : Entity, IAggregateRoot
     public int Stock { get; private set; }
     public string Image { get; private set; }
     public bool Active { get; private set; }
-    public DateTime RegistrationDate { get; } = DateTime.UtcNow;
+    public DateTime CreationDate { get; } = DateTime.UtcNow;
 
     public Category? Category { get; private set; } = null;
     public Dimensions? Dimensions { get; private set; } = null;
@@ -19,11 +19,20 @@ public class Product : Entity, IAggregateRoot
     public Product(string name, string description, decimal price, int stock, string image, 
         Guid categoryId, Dimensions? dimensions = null, bool active = true)
     {
-        AssertionConcern.AssertArgumentNotEmpty(name, $"The '{nameof(Name)}' field cannot be empty");
-        AssertionConcern.AssertArgumentNotEmpty(description, $"The '{nameof(Description)}' field cannot be empty");
-        AssertionConcern.AssertArgumentGreaterThanZero(price, $"The '{nameof(Price)}' field must be greater than zero");
-        AssertionConcern.AssertArgumentNotEmpty(image, $"The '{nameof(Image)}' field cannot be empty");
-        AssertionConcern.AssertArgumentNotEquals(categoryId, Guid.Empty, $"The Product '{nameof(CategoryId)}' field cannot be empty");
+        AssertionConcern.AssertArgumentNotEmpty(name, 
+            $"The '{nameof(Name)}' field cannot be empty");
+
+        AssertionConcern.AssertArgumentNotEmpty(description, 
+            $"The '{nameof(Description)}' field cannot be empty");
+
+        AssertionConcern.AssertArgumentGreaterThanZero(price, 
+            $"The '{nameof(Price)}' field must be greater than zero");
+
+        AssertionConcern.AssertArgumentNotEmpty(image, 
+            $"The '{nameof(Image)}' field cannot be empty");
+
+        AssertionConcern.AssertArgumentNotEquals(categoryId, Guid.Empty, 
+            $"The Product '{nameof(CategoryId)}' field cannot be empty");
 
         Name = name;
         Description = description;
