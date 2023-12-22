@@ -5,9 +5,11 @@ using Xunit;
 
 namespace DevStore.Catalog.Domain.Tests;
 
-public class ProductTests(ProductFixture productFixture) : IClassFixture<ProductFixture>
+public class ProductTests(ProductFixture productFixture, CategoryFixture categoryFixture) 
+    : IClassFixture<ProductFixture>, IClassFixture<CategoryFixture>
 {
     private readonly ProductFixture _productFixture = productFixture;
+    private readonly CategoryFixture _categoryFixture = categoryFixture;
 
     [Fact]
     public void CreateProduct_WithoutName_ShouldThrowDomainException()
@@ -106,7 +108,7 @@ public class ProductTests(ProductFixture productFixture) : IClassFixture<Product
     {
         // Arrange
         var product = _productFixture.CreateValidProduct();
-        var category = new Category("Foo", 10);
+        var category = _categoryFixture.CreateValidCategory();
 
         // Act
         product.SetCategory(category);

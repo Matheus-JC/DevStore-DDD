@@ -50,4 +50,10 @@ public class ProductRepository(CatalogContext context) : IProductRepository
     {
         _context.Categories.Update(category);
     }
+
+    public void Dispose()
+    {
+        _context.Dispose();
+        GC.SuppressFinalize(this);
+    }
 }

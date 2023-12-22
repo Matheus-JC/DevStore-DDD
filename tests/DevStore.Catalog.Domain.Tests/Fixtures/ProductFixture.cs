@@ -1,10 +1,18 @@
 ﻿using Bogus;
+using Moq.AutoMock;
 
 namespace DevStore.Catalog.Domain.Tests.Fixtures;
 
 public class ProductFixture : IDisposable
 {
-    private readonly Faker _faker = new("en_US");
+    private readonly Faker _faker;
+    public DimensionsFixture DimensionsFixture { get; private set; }
+
+    public ProductFixture()
+    {
+        _faker = new Faker("en_US");
+        DimensionsFixture = new DimensionsFixture();
+    }
 
     public Product CreateValidProduct(bool active = true) =>
         GenerateValidProducts(quantity: 1, active: active).First();
@@ -22,7 +30,7 @@ public class ProductFixture : IDisposable
                 stock: stock ?? GenerateRandomProductStock(),
                 image: GenerateRandomProductImage(),
                 categoryId: Guid.NewGuid(),
-                dimensions: new DimensionsFixture().CreateValidDimensions(),
+                dimensions: DimensionsFixture.CreateValidDimensions(),
                 active
             )
         );
