@@ -1,6 +1,6 @@
 ﻿namespace DevStore.Common.Data;
 
-public interface IUnitOfWork 
+public interface IUnitOfWork : IDisposable
 {
     Task<bool> Commit();
 }

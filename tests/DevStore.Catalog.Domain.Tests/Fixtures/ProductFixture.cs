@@ -22,7 +22,7 @@ public class ProductFixture : IDisposable
                 stock: stock ?? GenerateRandomProductStock(),
                 image: GenerateRandomProductImage(),
                 categoryId: Guid.NewGuid(),
-                dimensions: new Dimensions(50, 50, 50),
+                dimensions: new DimensionsFixture().CreateValidDimensions(),
                 active
             )
         );

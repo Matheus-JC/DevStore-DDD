@@ -1,15 +1,12 @@
 ﻿using DevStore.Catalog.Domain;
-using DevStore.Common.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevStore.Catalog.Data.Repositories;
+namespace DevStore.Catalog.Data.Repository;
 
 public class ProductRepository(CatalogContext context) : IProductRepository
 {
     private readonly CatalogContext _context = context;
 
-    public IUnitOfWork UnitOfWork => context;
-    
     public async Task<IEnumerable<Product?>> GetAll()
     {
         return await _context.Products.AsNoTracking().ToListAsync();
@@ -53,11 +50,4 @@ public class ProductRepository(CatalogContext context) : IProductRepository
     {
         _context.Categories.Update(category);
     }
-
-    public void Dispose()
-    {
-        _context.Dispose();
-        GC.SuppressFinalize(this);
-    }
-
 }

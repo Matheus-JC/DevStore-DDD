@@ -1,10 +1,9 @@
 ﻿using DevStore.Catalog.Domain;
-using DevStore.Common.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevStore.Catalog.Data;
 
-public class CatalogContext(DbContextOptions<CatalogContext> options) : DbContext(options), IUnitOfWork
+public class CatalogContext(DbContextOptions<CatalogContext> options) : DbContext(options)
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -28,10 +27,5 @@ public class CatalogContext(DbContextOptions<CatalogContext> options) : DbContex
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
 
         base.OnModelCreating(modelBuilder);
-    }
-
-    public async Task<bool> Commit()
-    {
-        return await base.SaveChangesAsync() > 0;
     }
 }

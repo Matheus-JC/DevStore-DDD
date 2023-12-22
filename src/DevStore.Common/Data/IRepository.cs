@@ -2,7 +2,6 @@
 
 namespace DevStore.Common.Data;
 
-public interface IRepository<T> : IDisposable where T : IAggregateRoot
+public interface IRepository<TEntity> where TEntity : IAggregateRoot
 {
-    IUnitOfWork UnitOfWork { get; }
 }
