@@ -27,11 +27,11 @@ public class ProductFixture : IDisposable
                 name: GenerateRandomProductName(),
                 description: GenerateRandomProductDescription(),
                 price: GenerateRandomProductPrice(),
-                stock: stock ?? GenerateRandomProductStock(),
                 image: GenerateRandomProductImage(),
                 categoryId: Guid.NewGuid(),
                 dimensions: DimensionsFixture.CreateValidDimensions(),
-                active
+                active,
+                stock: stock ?? GenerateRandomProductStock()
             )
         );
 
@@ -60,7 +60,8 @@ public class ProductFixture : IDisposable
             price: invalidPropertyName == nameof(Product.Price) ? 0.0m : GenerateRandomProductPrice(),
             image: invalidPropertyName == nameof(Product.Image) ? "" : GenerateRandomProductImage(),
             categoryId: invalidPropertyName == nameof(Product.CategoryId) ? Guid.Empty : Guid.NewGuid(),
-            stock: GenerateRandomProductStock()
+            stock: GenerateRandomProductStock(),
+            dimensions: DimensionsFixture.CreateValidDimensions()
         );
 
     private string GenerateRandomProductName() =>

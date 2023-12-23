@@ -1,11 +1,20 @@
-﻿using DevStore.Common.Data;
+﻿using DevStore.Catalog.Domain.Events;
+using DevStore.Common.Communication;
+using DevStore.Common.Data;
 
 namespace DevStore.Catalog.Domain;
 
-public class StockService(IProductRepository productRepository, IUnitOfWork unitOfWork) : IStockService
+public class StockService(
+    IProductRepository productRepository, 
+    IUnitOfWork unitOfWork, 
+    IMediatorHandler mediatorHandler) : IStockService
 {
+    public static int LowQuantityStock => 10;
+    
     public readonly IProductRepository _productRepository = productRepository;
     public readonly IUnitOfWork _unitOfWork = unitOfWork;
+    public readonly IMediatorHandler _mediatorHandler = mediatorHandler;
+
 
     public async Task<bool> DebitStock(Guid productId, int quantity)
     {
@@ -18,6 +27,11 @@ public class StockService(IProductRepository productRepository, IUnitOfWork unit
             return false;
 
         product.DebitStock(quantity);
+
+        if(product.Stock < LowQuantityStock)
+        {
+            await _mediatorHandler.PublishEvent(new ProductBelowStockEvent(product.Id, product.Stock));
+        }
 
         _productRepository.Update(product);
 

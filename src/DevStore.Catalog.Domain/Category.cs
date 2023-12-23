@@ -13,8 +13,11 @@ public class Category : Entity
 
     public Category(string name, int code)
     {
-        AssertionConcern.AssertArgumentNotEmpty(name, $"The '{nameof(Name)}' field cannot be empty");
-        AssertionConcern.AssertArgumentGreaterThanZero(code, $"The '{nameof(Code)}' field must be greater than zero");
+        AssertionConcern.AssertArgumentNotEmpty(name, 
+            $"The '{nameof(Name)}' field cannot be empty");
+
+        AssertionConcern.AssertArgumentGreaterThanZero(code, 
+            $"The '{nameof(Code)}' field must be greater than zero");
 
         Name = name;
         Code = code;

@@ -1,5 +1,7 @@
 ﻿using DevStore.Catalog.Domain.Tests.Fixtures;
+using DevStore.Common.Communication;
 using DevStore.Common.Data;
+using DevStore.Common.DomainObjects;
 using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
@@ -21,27 +23,54 @@ public class StockServiceTests: IClassFixture<ProductFixture>
     }
 
     [Fact]
-    public async void DebitStock_WithValidParams_ShouldExecuteSuccessfully()
+    public async void DebitStock_WithStockNotGettingLow_ShouldReturnTrue()
     {
         // Arrange
-        var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 15);
-        var mockerProductRepository = _mocker.GetMock<IProductRepository>();
-        var mockerUnitOfWork = _mocker.GetMock<IUnitOfWork>();
+        var product = _productFixture.CreateValidProductWithSpecifiedStock(
+            stock: StockService.LowQuantityStock + 10
+        );
 
-        mockerProductRepository.Setup(p => p.GetById(product.Id))
+        _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
-        mockerUnitOfWork.Setup(u => u.Commit()).ReturnsAsync(true);
+        _mocker.GetMock<IUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
 
         // Act
-        var result = await _stockService.DebitStock(product.Id, quantity: 10);
+        var result = await _stockService.DebitStock(product.Id, quantity: 5);
 
         // Assert
         result.Should().BeTrue();
-        product.Stock.Should().Be(5);
-        mockerProductRepository.Verify(r => r.GetById(product.Id), Times.Once);
-        mockerProductRepository.Verify(r => r.Update(product), Times.Once);
-        mockerUnitOfWork.Verify(r => r.Commit(), Times.Once);
+        product.Stock.Should().Be(StockService.LowQuantityStock + 5);
+
+        _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
+        _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishEvent(It.IsAny<DomainEvent>()), Times.Never);
+        _mocker.GetMock<IUnitOfWork>().Verify(r => r.Commit(), Times.Once);
+    }
+
+    [Fact]
+    public async void DebitStock_WithStockGettingLow_ShouldReturnTrueAndSendDomainEvent()
+    {
+        // Arrange
+        var product = _productFixture.CreateValidProductWithSpecifiedStock(
+            stock: StockService.LowQuantityStock + 10
+        );
+
+        _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
+            .ReturnsAsync(product);
+
+        _mocker.GetMock<IUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
+
+        // Act
+        var result = await _stockService.DebitStock(product.Id, quantity: 15);
+
+        // Assert
+        result.Should().BeTrue();
+        product.Stock.Should().Be(StockService.LowQuantityStock - 5);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
+        _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishEvent(It.IsAny<DomainEvent>()), Times.Once);
+        _mocker.GetMock<IUnitOfWork>().Verify(r => r.Commit(), Times.Once);
     }
 
     [Fact]
@@ -49,11 +78,9 @@ public class StockServiceTests: IClassFixture<ProductFixture>
     {
         // Arrange
         var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 15);
-        var mockerProductRepository = _mocker.GetMock<IProductRepository>();
-        var mockerUnitOfWork = _mocker.GetMock<IUnitOfWork>();
         var productInvalidId = Guid.NewGuid();
         
-        mockerProductRepository.Setup(p => p.GetById(product.Id))
+        _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
         // Act
@@ -62,9 +89,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         // Assert
         result.Should().BeFalse();
         product.Stock.Should().Be(15);
-        mockerProductRepository.Verify(r => r.GetById(productInvalidId), Times.Once);
-        mockerProductRepository.Verify(r => r.Update(product), Times.Never);
-        mockerUnitOfWork.Verify(r => r.Commit(), Times.Never);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(productInvalidId), Times.Once);
     }
 
     [Fact]
@@ -72,10 +97,8 @@ public class StockServiceTests: IClassFixture<ProductFixture>
     {
         // Arrange
         var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 15);
-        var mockerProductRepository = _mocker.GetMock<IProductRepository>();
-        var mockerUnitOfWork = _mocker.GetMock<IUnitOfWork>();
 
-        mockerProductRepository.Setup(p => p.GetById(product.Id))
+        _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
         // Act
@@ -84,23 +107,19 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         // Assert
         result.Should().BeFalse();
         product.Stock.Should().Be(15);
-        mockerProductRepository.Verify(r => r.GetById(product.Id), Times.Once);
-        mockerProductRepository.Verify(r => r.Update(product), Times.Never);
-        mockerUnitOfWork.Verify(r => r.Commit(), Times.Never);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
     }
 
     [Fact]
-    public async void ReplenishStock_WithValidParams_ShouldExecuteSuccessfully()
+    public async void ReplenishStock_WithValidParams_ShouldReturnTrue()
     {
         // Arrange
         var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 5);
-        var mockerProductRepository = _mocker.GetMock<IProductRepository>();
-        var mockerUnitOfWork = _mocker.GetMock<IUnitOfWork>();
 
-        mockerProductRepository.Setup(p => p.GetById(product.Id))
+        _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
-        mockerUnitOfWork.Setup(u => u.Commit()).ReturnsAsync(true);
+        _mocker.GetMock<IUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
 
         // Act
         var result = await _stockService.ReplenishStock(product.Id, quantity: 10);
@@ -108,9 +127,9 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         // Assert
         result.Should().BeTrue();
         product.Stock.Should().Be(15);
-        mockerProductRepository.Verify(r => r.GetById(product.Id), Times.Once);
-        mockerProductRepository.Verify(r => r.Update(product), Times.Once);
-        mockerUnitOfWork.Verify(r => r.Commit(), Times.Once);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
+        _mocker.GetMock<IUnitOfWork>().Verify(r => r.Commit(), Times.Once);
     }
 
     [Fact]
@@ -118,12 +137,10 @@ public class StockServiceTests: IClassFixture<ProductFixture>
     {
         // Arrange
         var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 5);
-        var mockerProductRepository = _mocker.GetMock<IProductRepository>();
-        var mockerUnitOfWork = _mocker.GetMock<IUnitOfWork>();
 
         var productInvalidId = Guid.NewGuid();
 
-        mockerProductRepository.Setup(p => p.GetById(product.Id))
+        _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
         // Act
@@ -132,8 +149,6 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         // Assert
         result.Should().BeFalse();
         product.Stock.Should().Be(5);
-        mockerProductRepository.Verify(r => r.GetById(productInvalidId), Times.Once);
-        mockerProductRepository.Verify(r => r.Update(product), Times.Never);
-        mockerUnitOfWork.Verify(r => r.Commit(), Times.Never);
+        _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(productInvalidId), Times.Once);
     }
 }

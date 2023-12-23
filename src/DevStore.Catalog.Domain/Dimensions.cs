@@ -10,9 +10,14 @@ public class Dimensions : ValueObject
 
     public Dimensions(int width, int height , int depth)
     {
-        AssertionConcern.AssertArgumentGreaterThanZero(width, $"The '{nameof(Width)}' field must be greater than zero");
-        AssertionConcern.AssertArgumentGreaterThanZero(height, $"The '{nameof(Height)}' field must be greater than zero");
-        AssertionConcern.AssertArgumentGreaterThanZero(depth, $"The '{nameof(Depth)}' field must be greater than zero");
+        AssertionConcern.AssertArgumentGreaterThanZero(width, 
+            $"The '{nameof(Width)}' field must be greater than zero");
+
+        AssertionConcern.AssertArgumentGreaterThanZero(height, 
+            $"The '{nameof(Height)}' field must be greater than zero");
+
+        AssertionConcern.AssertArgumentGreaterThanZero(depth, 
+            $"The '{nameof(Depth)}' field must be greater than zero");
 
         Width = width; 
         Height = height; 

@@ -14,10 +14,10 @@ public class Product : Entity, IAggregateRoot
     public DateTime CreationDate { get; } = DateTime.UtcNow;
 
     public Category? Category { get; private set; } = null;
-    public Dimensions? Dimensions { get; private set; } = null;
+    public Dimensions Dimensions { get; private set; }
 
-    public Product(string name, string description, decimal price, int stock, string image, 
-        Guid categoryId, Dimensions? dimensions = null, bool active = true)
+    public Product(string name, string description, decimal price, string image, 
+        Guid categoryId, Dimensions dimensions, bool active = true, int stock = 0)
     {
         AssertionConcern.AssertArgumentNotEmpty(name, 
             $"The '{nameof(Name)}' field cannot be empty");

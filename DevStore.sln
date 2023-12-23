@@ -17,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{519761BF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevStore.Catalog.Domain.Tests", "tests\DevStore.Catalog.Domain.Tests\DevStore.Catalog.Domain.Tests.csproj", "{8EDA54B9-1DDD-43C1-BE79-D2FA0DC0700D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevStore.Catalog.Data", "src\DevStore.Catalog.Data\DevStore.Catalog.Data.csproj", "{56CD03DE-4B58-4A47-A615-35014928EAF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevStore.Catalog.Data", "src\DevStore.Catalog.Data\DevStore.Catalog.Data.csproj", "{56CD03DE-4B58-4A47-A615-35014928EAF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevStore.Catalog.Application", "src\DevStore.Catalog.Application\DevStore.Catalog.Application.csproj", "{E1EDC59C-9131-4A45-9D9A-5351E5B31314}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{56CD03DE-4B58-4A47-A615-35014928EAF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56CD03DE-4B58-4A47-A615-35014928EAF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56CD03DE-4B58-4A47-A615-35014928EAF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1EDC59C-9131-4A45-9D9A-5351E5B31314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1EDC59C-9131-4A45-9D9A-5351E5B31314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1EDC59C-9131-4A45-9D9A-5351E5B31314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1EDC59C-9131-4A45-9D9A-5351E5B31314}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{519761BF-095B-4A06-84A7-21CEDAA47058} = {DB816D9B-1463-4AC3-B22C-F54EDA25C60A}
 		{8EDA54B9-1DDD-43C1-BE79-D2FA0DC0700D} = {519761BF-095B-4A06-84A7-21CEDAA47058}
 		{56CD03DE-4B58-4A47-A615-35014928EAF4} = {DB816D9B-1463-4AC3-B22C-F54EDA25C60A}
+		{E1EDC59C-9131-4A45-9D9A-5351E5B31314} = {DB816D9B-1463-4AC3-B22C-F54EDA25C60A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C10CF44-4F2A-4AB1-B8BD-285654EB0B7A}
