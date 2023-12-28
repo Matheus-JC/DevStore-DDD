@@ -8,6 +8,8 @@ public class Dimensions : ValueObject
     public int Height { get; set; }
     public int Depth { get; set; }
 
+    protected Dimensions() { }
+
     public Dimensions(int width, int height , int depth)
     {
         AssertionConcern.AssertArgumentGreaterThanZero(width, 

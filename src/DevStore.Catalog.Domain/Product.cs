@@ -5,16 +5,18 @@ namespace DevStore.Catalog.Domain;
 public class Product : Entity, IAggregateRoot
 {
     public Guid CategoryId { get; private set; }
-    public string Name { get; private set; }
-    public string Description { get; private set; }
+    public string Name { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
     public decimal Price { get; private set; }
     public int Stock { get; private set; }
-    public string Image { get; private set; }
+    public string Image { get; private set; } = null!;
     public bool Active { get; private set; }
     public DateTime CreationDate { get; } = DateTime.UtcNow;
 
     public Category? Category { get; private set; } = null;
-    public Dimensions Dimensions { get; private set; }
+    public Dimensions Dimensions { get; private set; } = null!;
+
+    protected Product() { }
 
     public Product(string name, string description, decimal price, string image, 
         Guid categoryId, Dimensions dimensions, bool active = true, int stock = 0)
@@ -62,7 +64,8 @@ public class Product : Entity, IAggregateRoot
 
     public void DebitStock(int quantity)
     {
-        AssertionConcern.AssertArgumentGreaterThanZero(quantity, "The quantity must be greater than zero");
+        if (quantity < 0) 
+            quantity *= -1;
 
         if (!HasQuantityInStock(quantity))
             throw new DomainException("The quantity in stock is insufficient");

@@ -14,7 +14,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .IsRequired()
             .HasColumnType("varchar(250)");
 
-        // 1 : N => Categorias : Produtos
         builder.HasMany(c => c.Products)
             .WithOne(p => p.Category)
             .HasForeignKey(p => p.CategoryId);

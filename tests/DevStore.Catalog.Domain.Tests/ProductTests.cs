@@ -186,18 +186,20 @@ public class ProductTests(ProductFixture productFixture, CategoryFixture categor
     }
 
     [Fact]
-    public void DebitStock_WithZeroQuantity_ShouldThrowDomainException()
+    public void DebitStock_WithNegativeStockQuantityValue_ShouldConvertValueToPositiveAndDebitStockCorrectly()
     {
         // Arrange
-        var product = _productFixture.CreateValidProduct();
+        var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 10);
 
-        // Act && Assert
-        FluentActions.Invoking(() => product.DebitStock(0))
-            .Should().Throw<DomainException>().WithMessage("*zero*");
+        // Act
+        product.DebitStock(quantity: -2);
+
+        // Assert
+        product.Stock.Should().Be(8);
     }
 
     [Fact]
-    public void DebitStock_WithAboveQuantityStock_ShouldThrowDomainException()
+    public void DebitStock_WithQuantityAboveStock_ShouldThrowDomainException()
     {
         // Arrange
         var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 10);

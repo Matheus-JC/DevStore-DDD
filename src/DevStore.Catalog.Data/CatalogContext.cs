@@ -25,7 +25,5 @@ public class CatalogContext(DbContextOptions<CatalogContext> options) : DbContex
             relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
-
-        base.OnModelCreating(modelBuilder);
     }
 }

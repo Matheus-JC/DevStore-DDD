@@ -10,10 +10,10 @@ public class ProductDTO
     public Guid CategoryId { get; set; }
 
     [Required(ErrorMessage = "The {0} field is required")]
-    public required string Name { get; set; }
+    public string? Name { get; set; }
 
     [Required(ErrorMessage = "The {0} field is required")]
-    public required string Description { get; set; }
+    public string? Description { get; set; }
 
     [Required(ErrorMessage = "The {0} field is required")]
     public bool Active { get; set; }
@@ -25,7 +25,7 @@ public class ProductDTO
     public DateTime CreationDate { get; set; }
 
     [Required(ErrorMessage = "The {0} field is required")]
-    public required string Image { get; set; }
+    public string? Image { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Field {0} must have a minimum value of {1}")]
     [Required(ErrorMessage = "The {0} field is required")]

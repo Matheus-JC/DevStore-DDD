@@ -1,0 +1,33 @@
+﻿@model DevStore.Catalog.Application.DTOs.ProductDTO
+@{
+    ViewData["Title"] = "Update Product";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4 item-photo">
+            <img width="400" height="400" src="~/Images/@Model.Image" />
+        </div>
+        <div class="col-xs-5" style="border:20px solid white">
+            <h3>@Model.Name</h3>
+
+            <h6 class="title-price"><small>Offer</small></h6>
+            <h3 style="margin-top:0px;">@Model.Price.ToString("C")</h3>
+
+            <p>@Model.Stock in stock!</p>
+            <p>@Model.Description</p>
+
+            <div class="section" style="padding-bottom:20px;">
+                <form method="post" asp-controller="AdminProducts" asp-action="UpdateStock">
+                    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                    <input type="text" id="quantity" name="quantity" /> &nbsp;
+                    <button class="btn btn-primary">Update Stock</button>
+                    <a class="btn btn-secondary" asp-action="Index">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

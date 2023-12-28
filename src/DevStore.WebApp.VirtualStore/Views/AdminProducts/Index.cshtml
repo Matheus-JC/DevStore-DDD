@@ -1,0 +1,98 @@
+﻿@model IEnumerable<DevStore.Catalog.Application.DTOs.ProductDTO>
+
+@{
+    ViewData["Title"] = "Catalog";
+}
+<style>
+    h4 {
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .price {
+        font-size: 30px;
+        margin: 0 auto;
+        color: #333;
+    }
+
+    .right {
+        float: right;
+        border-bottom: 2px solid #4B8E4B;
+    }
+
+    .thumbnail {
+        opacity: 0.70;
+    }
+
+    .thumbnail:hover {
+        opacity: 1.00;
+    }
+
+    .line {
+        margin-bottom: 5px;
+    }
+
+    .product_view .modal-dialog {
+        max-width: 800px;
+        width: 100%;
+    }
+
+    .pre-cost {
+        text-decoration: line-through;
+        color: #a5a5a5;
+    }
+
+    .space-ten {
+        padding: 10px 0;
+    }
+
+    .productContainer{
+        padding: 25px 10px 25px 10px;
+    }
+
+    @@media screen and (max-width: 770px) {
+        .right {
+            float: left;
+            width: 100%;
+        }
+    }
+</style>
+<div class="container">
+    <h1>Product Administration</h1>
+    <hr />
+    <div class="row">
+        <a asp-controller="AdminProducts" asp-action="NewProduct" class="btn btn-success right col-md-2 col-sm-4">+ Add New</a>
+    </div>
+    <hr />
+    <div class="row">
+        <!-- BEGIN PRODUCTS -->
+        @{
+            foreach (var product in Model.OrderBy(p => p.CategoryId))
+            {
+                <div class="col-md-3 col-sm-6 productContainer">
+                    <div class="thumbnail">
+                        <img width="200" height="200" src="~/Images/@product.Image" />
+                        <h4>@product.Name</h4>
+                        <p>@product.Stock in stock</p>
+                        <p>@product.Description</p>
+                        <p class="price">@product.Price.ToString("C")</p>
+                        <hr class="line">
+                        <div class="row">
+                            <a asp-controller="AdminProducts" asp-action="UpdateProduct" asp-route-id="@product.Id"
+                               class="btn btn-success right col-sm-3 col-sm-4" style="margin-right: 10px">Edit</a>
+                            <a asp-controller="AdminProducts" asp-action="UpdateStock" asp-route-id="@product.Id"
+                               class="btn btn-secondary right col-xs-4 col-sm-3 col-sm-4">Stock</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        <!-- END PRODUCTS -->
+    </div>
+</div>
+
