@@ -49,7 +49,23 @@ public class AssertionConcern
         }
     }
 
+    public static void AssertArgumentMinimumValue(decimal value, decimal minimumValue, string message)
+    {
+        if (value < minimumValue)
+        {
+            throw new DomainException(message);
+        }
+    }
+
     public static void AssertArgumentMaximumValue(int value, int maximumValue, string message)
+    {
+        if (value > maximumValue)
+        {
+            throw new DomainException(message);
+        }
+    }
+
+    public static void AssertArgumentMaximumValue(decimal value, decimal maximumValue, string message)
     {
         if (value > maximumValue)
         {

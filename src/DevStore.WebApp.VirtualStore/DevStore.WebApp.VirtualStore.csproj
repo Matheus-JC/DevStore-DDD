@@ -9,11 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
   </ItemGroup>
@@ -23,6 +23,8 @@
     <ProjectReference Include="..\DevStore.Catalog.Data\DevStore.Catalog.Data.csproj" />
     <ProjectReference Include="..\DevStore.Catalog.Domain\DevStore.Catalog.Domain.csproj" />
     <ProjectReference Include="..\DevStore.Common\DevStore.Common.csproj" />
+    <ProjectReference Include="..\DevStore.Sales.Application\DevStore.Sales.Application.csproj" />
+    <ProjectReference Include="..\DevStore.Sales.Data\DevStore.Sales.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

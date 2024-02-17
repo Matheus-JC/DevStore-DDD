@@ -17,7 +17,8 @@ namespace DevStore.Catalog.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(250)", nullable: false),
-                    Code = table.Column<int>(type: "int", nullable: false)
+                    Code = table.Column<int>(type: "int", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,6 +37,7 @@ namespace DevStore.Catalog.Data.Migrations
                     Stock = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "varchar(250)", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Width = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Depth = table.Column<int>(type: "int", nullable: false)

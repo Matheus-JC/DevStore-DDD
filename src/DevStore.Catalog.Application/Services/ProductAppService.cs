@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DevStore.Catalog.Application.DTOs;
 using DevStore.Catalog.Domain;
-using DevStore.Common.Data;
 using DevStore.Common.DomainObjects;
 
 namespace DevStore.Catalog.Application.Services;
@@ -10,12 +9,12 @@ public class ProductAppService(
     IProductRepository productRepository, 
     IStockService stockService, 
     IMapper mapper, 
-    IUnitOfWork unitOfWork) : IProductAppService
+    ICatalogUnitOfWork unitOfWork) : IProductAppService
 {
     private readonly IProductRepository _productRepository = productRepository;
     private readonly IStockService _stockService = stockService;
     private readonly IMapper _mapper = mapper;
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly ICatalogUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<IEnumerable<ProductDTO>> GetByCategory(int code)
     {

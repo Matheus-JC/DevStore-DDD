@@ -1,5 +1,6 @@
 using DevStore.Catalog.Application.Mappings;
 using DevStore.Catalog.Data;
+using DevStore.Sales.Data;
 using DevStore.WebApp.VirtualStore.Configurations;
 using DevStore.WebApp.VirtualStore.Data;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDbContext<CatalogContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<SalesContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

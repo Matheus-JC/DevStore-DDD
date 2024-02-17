@@ -39,21 +39,21 @@ public class ProductFixture : IDisposable
     }
 
     public Product CreateInvalidProductWithoutName() =>
-        CreateInvalidProduct(nameof(Product.Name));
+        CreateItemsWithAnInvalidProperty(nameof(Product.Name));
 
     public Product CreateInvalidProductWithoutDescription() =>
-        CreateInvalidProduct(nameof(Product.Description));
+        CreateItemsWithAnInvalidProperty(nameof(Product.Description));
 
     public Product CreateInvalidProductWithZeroPrice() =>
-        CreateInvalidProduct(nameof(Product.Price));
+        CreateItemsWithAnInvalidProperty(nameof(Product.Price));
 
     public Product CreateInvalidProductWithEmptyCategoryId() =>
-        CreateInvalidProduct(nameof(Product.CategoryId));
+        CreateItemsWithAnInvalidProperty(nameof(Product.CategoryId));
 
     public Product CreateInvalidProductWithNoImage() =>
-        CreateInvalidProduct(nameof(Product.Image));
+        CreateItemsWithAnInvalidProperty(nameof(Product.Image));
 
-    private Product CreateInvalidProduct(string invalidPropertyName) =>
+    private Product CreateItemsWithAnInvalidProperty(string invalidPropertyName) =>
         new(
             name: invalidPropertyName == nameof(Product.Name) ? "" : GenerateRandomProductName(),
             description: invalidPropertyName == nameof(Product.Description) ? "" : GenerateRandomProductDescription(),

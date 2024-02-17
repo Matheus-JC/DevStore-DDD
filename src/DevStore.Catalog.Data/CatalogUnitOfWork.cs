@@ -1,8 +1,8 @@
-﻿using DevStore.Common.Data;
+﻿using DevStore.Catalog.Domain;
 
-namespace DevStore.Catalog.Data.UnitOfWork;
+namespace DevStore.Catalog.Data;
 
-public class UnitOfWork(CatalogContext context) : IUnitOfWork
+public class CatalogUnitOfWork(CatalogContext context) : ICatalogUnitOfWork
 {
     private readonly CatalogContext _context = context;
 

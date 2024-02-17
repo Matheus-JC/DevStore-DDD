@@ -1,4 +1,5 @@
 ﻿using DevStore.Catalog.Domain;
+using DevStore.Common.Messages;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevStore.Catalog.Data;
@@ -23,6 +24,8 @@ public class CatalogContext(DbContextOptions<CatalogContext> options) : DbContex
 
         foreach (var relationship in entitiesTypes.SelectMany(e => e.GetForeignKeys()))
             relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+
+        modelBuilder.Ignore<Event>();
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
     }

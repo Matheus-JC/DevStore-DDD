@@ -1,4 +1,4 @@
-﻿using DevStore.Common.DomainObjects;
+﻿using DevStore.Common.Messages.CommonMessages.DomainEvents;
 
 namespace DevStore.Catalog.Domain.Events;
 

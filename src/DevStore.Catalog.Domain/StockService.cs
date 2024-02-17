@@ -1,18 +1,18 @@
 ﻿using DevStore.Catalog.Domain.Events;
-using DevStore.Common.Communication;
+using DevStore.Common.Communication.Mediator;
 using DevStore.Common.Data;
 
 namespace DevStore.Catalog.Domain;
 
 public class StockService(
-    IProductRepository productRepository, 
-    IUnitOfWork unitOfWork, 
+    IProductRepository productRepository,
+    ICatalogUnitOfWork unitOfWork, 
     IMediatorHandler mediatorHandler) : IStockService
 {
     public static int LowQuantityStock => 10;
     
     public readonly IProductRepository _productRepository = productRepository;
-    public readonly IUnitOfWork _unitOfWork = unitOfWork;
+    public readonly ICatalogUnitOfWork _unitOfWork = unitOfWork;
     public readonly IMediatorHandler _mediatorHandler = mediatorHandler;
 
 
@@ -20,7 +20,7 @@ public class StockService(
     {
         var product = await _productRepository.GetById(productId);
 
-        if (product == null)
+        if (product is null)
             return false;
 
         if(!product.HasQuantityInStock(quantity)) 
@@ -42,7 +42,7 @@ public class StockService(
     {
         var product = await _productRepository.GetById(productId);
 
-        if (product == null) 
+        if (product is null) 
             return false;
 
         product.ReplenishStock(quantity);

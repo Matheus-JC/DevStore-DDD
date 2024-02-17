@@ -11,7 +11,7 @@ public class Product : Entity, IAggregateRoot
     public int Stock { get; private set; }
     public string Image { get; private set; } = null!;
     public bool Active { get; private set; }
-    public DateTime CreationDate { get; } = DateTime.UtcNow;
+    public DateTime CreationDate { get; private set; } = DateTime.UtcNow;
 
     public Category? Category { get; private set; } = null;
     public Dimensions Dimensions { get; private set; } = null!;
@@ -34,7 +34,7 @@ public class Product : Entity, IAggregateRoot
             $"The '{nameof(Image)}' field cannot be empty");
 
         AssertionConcern.AssertArgumentNotEquals(categoryId, Guid.Empty, 
-            $"The Product '{nameof(CategoryId)}' field cannot be empty");
+            $"The '{nameof(CategoryId)}' field cannot be empty");
 
         Name = name;
         Description = description;

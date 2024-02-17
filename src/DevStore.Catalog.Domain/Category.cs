@@ -6,7 +6,7 @@ public class Category : Entity
 {
     public string Name { get; private set; } = null!;
     public int Code { get; private set; }
-    public DateTime CreationDate { get; } = DateTime.UtcNow;
+    public DateTime CreationDate { get; private set; } = DateTime.UtcNow;
 
     public readonly List<Product> _products = [];
     public IReadOnlyCollection<Product> Products => _products;

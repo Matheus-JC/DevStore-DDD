@@ -1,7 +1,7 @@
 ﻿using DevStore.Catalog.Domain.Tests.Fixtures;
-using DevStore.Common.Communication;
+using DevStore.Common.Communication.Mediator;
 using DevStore.Common.Data;
-using DevStore.Common.DomainObjects;
+using DevStore.Common.Messages.CommonMessages.DomainEvents;
 using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
@@ -33,7 +33,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
-        _mocker.GetMock<IUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
+        _mocker.GetMock<ICatalogUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
 
         // Act
         var result = await _stockService.DebitStock(product.Id, quantity: 5);
@@ -45,7 +45,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
         _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
         _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishEvent(It.IsAny<DomainEvent>()), Times.Never);
-        _mocker.GetMock<IUnitOfWork>().Verify(r => r.Commit(), Times.Once);
+        _mocker.GetMock<ICatalogUnitOfWork>().Verify(r => r.Commit(), Times.Once);
     }
 
     [Fact]
@@ -59,7 +59,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
-        _mocker.GetMock<IUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
+        _mocker.GetMock<ICatalogUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
 
         // Act
         var result = await _stockService.DebitStock(product.Id, quantity: 15);
@@ -70,7 +70,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
         _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
         _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishEvent(It.IsAny<DomainEvent>()), Times.Once);
-        _mocker.GetMock<IUnitOfWork>().Verify(r => r.Commit(), Times.Once);
+        _mocker.GetMock<ICatalogUnitOfWork>().Verify(r => r.Commit(), Times.Once);
     }
 
     [Fact]
@@ -119,7 +119,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 
-        _mocker.GetMock<IUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
+        _mocker.GetMock<ICatalogUnitOfWork>().Setup(u => u.Commit()).ReturnsAsync(true);
 
         // Act
         var result = await _stockService.ReplenishStock(product.Id, quantity: 10);
@@ -129,7 +129,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         product.Stock.Should().Be(15);
         _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
         _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
-        _mocker.GetMock<IUnitOfWork>().Verify(r => r.Commit(), Times.Once);
+        _mocker.GetMock<ICatalogUnitOfWork>().Verify(r => r.Commit(), Times.Once);
     }
 
     [Fact]

@@ -142,6 +142,9 @@
 </style>
 
 <div class="container">
+
+    <vc:summary />
+
     <div class="row">
         <div class="col-md-4 item-photo">
             <img width="400" height="400" src="~/Images/@Model.Image" />
@@ -156,18 +159,25 @@
             <p>@Model.Stock in stock!</p>
             <p>@Model.Description</p>
 
-            <div class="section" style="padding-bottom:20px;">
-                <h6 class="title-attr"><small>Quantity</small></h6>
-                <div>
-                    <div class="btn-minus"><span style="font-size: 15px">-</span></div>
-                    <input style="font-size: 15px" type="text" value="1" />
-                    <div class="btn-plus"><span style="font-size: 15px">+</span></div>
-                </div>
-            </div>
+            <form method="post" asp-controller="ShoppingCart" asp-action="AddItem">
 
-            <div class="section" style="padding-bottom:20px;">
-                    <button class="btn btn-success"><span style="margin-right:20px" aria-hidden="true"></span> Buy Now!</button>
-            </div>
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+                <div class="section" style="padding-bottom: 20px;">
+                    <h6 class="title-attr"><small>QUANTITY</small></h6>
+                    <div>
+                        <div class="btn-minus"><span style="font-size: 15px">-</span></div>
+                        <input id="quantity" name="quantity" style="font-size: 15px" type="text" value="1" />
+                        <div class="btn-plus"><span style="font-size: 15px">+</span></div>
+                    </div>
+                </div>
+
+                <div class="section" style="padding-bottom: 20px;">
+                    <button type="submit" class="btn btn-success">
+                        <span style="margin-right: 20px" aria-hidden="true"></span> Buy Now!
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

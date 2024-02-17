@@ -10,7 +10,7 @@ public class ProductDTO
     public Guid CategoryId { get; set; }
 
     [Required(ErrorMessage = "The {0} field is required")]
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     [Required(ErrorMessage = "The {0} field is required")]
     public string? Description { get; set; }

@@ -17,7 +17,7 @@ namespace DevStore.Catalog.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -31,6 +31,9 @@ namespace DevStore.Catalog.Data.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(250)");
@@ -38,20 +41,6 @@ namespace DevStore.Catalog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("25feafe7-1cab-4e8c-9337-7b109b22b728"),
-                            Code = 100,
-                            Name = "shirt"
-                        },
-                        new
-                        {
-                            Id = new Guid("ddd23b4f-754b-49c3-a2c8-759e10692f22"),
-                            Code = 101,
-                            Name = "mug"
-                        });
                 });
 
             modelBuilder.Entity("DevStore.Catalog.Domain.Product", b =>
@@ -65,6 +54,9 @@ namespace DevStore.Catalog.Data.Migrations
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -89,96 +81,6 @@ namespace DevStore.Catalog.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9b33b73a-83e9-4a63-aef9-ed30f3e2ccbf"),
-                            Active = true,
-                            CategoryId = new Guid("ddd23b4f-754b-49c3-a2c8-759e10692f22"),
-                            Description = "Porcelain mug with thermal printing.",
-                            Image = "mug4.jpg",
-                            Name = "No Coffee No Code Mug",
-                            Price = 10.00m,
-                            Stock = 23
-                        },
-                        new
-                        {
-                            Id = new Guid("572b7fd8-d89c-4452-833c-fd99c35a10c3"),
-                            Active = true,
-                            CategoryId = new Guid("25feafe7-1cab-4e8c-9337-7b109b22b728"),
-                            Description = "100% cotton t-shirt, resistant to washing and high temperatures.",
-                            Image = "shirt4.jpg",
-                            Name = "Debugar Black T-Shirt",
-                            Price = 110.00m,
-                            Stock = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("3f04ec21-8d57-46b0-a8e2-98f248ed499e"),
-                            Active = true,
-                            CategoryId = new Guid("ddd23b4f-754b-49c3-a2c8-759e10692f22"),
-                            Description = "Porcelain mug with thermal printing.",
-                            Image = "mug3.jpg",
-                            Name = "Turn Coffee in Code Mug",
-                            Price = 20.00m,
-                            Stock = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("85b1dc9e-8481-4891-86a8-a53571c4cffe"),
-                            Active = true,
-                            CategoryId = new Guid("25feafe7-1cab-4e8c-9337-7b109b22b728"),
-                            Description = "100% cotton t-shirt, resistant to washing and high temperatures.",
-                            Image = "shirt2.jpg",
-                            Name = "Black Code Life T-Shirt",
-                            Price = 90.00m,
-                            Stock = 3
-                        },
-                        new
-                        {
-                            Id = new Guid("1cdba9cc-6c60-44b5-b4a4-9ac5fb13966b"),
-                            Active = true,
-                            CategoryId = new Guid("25feafe7-1cab-4e8c-9337-7b109b22b728"),
-                            Description = "100% cotton t-shirt, resistant to washing and high temperatures.",
-                            Image = "shirt1.jpg",
-                            Name = "Software Developer T-Shirt",
-                            Price = 100.00m,
-                            Stock = 8
-                        },
-                        new
-                        {
-                            Id = new Guid("c6d432bc-846e-430f-9f22-441bbcd295c5"),
-                            Active = true,
-                            CategoryId = new Guid("25feafe7-1cab-4e8c-9337-7b109b22b728"),
-                            Description = "100% cotton t-shirt, resistant to washing and high temperatures.",
-                            Image = "shirt3.jpg",
-                            Name = "Gray Code Life T-Shirt",
-                            Price = 80.00m,
-                            Stock = 15
-                        },
-                        new
-                        {
-                            Id = new Guid("40ebe85c-19b9-4f34-a491-5d2a184fce3e"),
-                            Active = true,
-                            CategoryId = new Guid("ddd23b4f-754b-49c3-a2c8-759e10692f22"),
-                            Description = "Porcelain mug with thermal printing.",
-                            Image = "mug1.jpg",
-                            Name = "Star Bugs Coffee Mug",
-                            Price = 20.00m,
-                            Stock = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("8058ea48-d033-48b8-be46-aa7f2655768b"),
-                            Active = true,
-                            CategoryId = new Guid("ddd23b4f-754b-49c3-a2c8-759e10692f22"),
-                            Description = "Porcelain mug with thermal printing.",
-                            Image = "mug2.jpg",
-                            Name = "Programmer Code Mug",
-                            Price = 15.00m,
-                            Stock = 8
-                        });
                 });
 
             modelBuilder.Entity("DevStore.Catalog.Domain.Product", b =>
