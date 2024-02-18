@@ -23,12 +23,10 @@
     <ProjectReference Include="..\DevStore.Catalog.Data\DevStore.Catalog.Data.csproj" />
     <ProjectReference Include="..\DevStore.Catalog.Domain\DevStore.Catalog.Domain.csproj" />
     <ProjectReference Include="..\DevStore.Common\DevStore.Common.csproj" />
+    <ProjectReference Include="..\DevStore.Payment.AntiCorruption\DevStore.Payment.AntiCorruption.csproj" />
+    <ProjectReference Include="..\DevStore.Payment.Data\DevStore.Payment.Data.csproj" />
     <ProjectReference Include="..\DevStore.Sales.Application\DevStore.Sales.Application.csproj" />
     <ProjectReference Include="..\DevStore.Sales.Data\DevStore.Sales.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>

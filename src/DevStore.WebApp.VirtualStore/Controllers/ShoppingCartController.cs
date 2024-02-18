@@ -4,8 +4,10 @@ using DevStore.Common.Messages.CommonMessages.Notifications;
 using DevStore.Sales.Application.Commands.AddOrderItem;
 using DevStore.Sales.Application.Commands.ApplyOrderVoucher;
 using DevStore.Sales.Application.Commands.RemoveOrderItem;
+using DevStore.Sales.Application.Commands.StartOrder;
 using DevStore.Sales.Application.Commands.UpdateOrderItem;
 using DevStore.Sales.Application.Queries;
+using DevStore.Sales.Application.Queries.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -103,5 +105,40 @@ public class ShoppingCartController(
         }
 
         return View("Index", await _orderQueries.GetShoppingCartClient(ClientId));
+    }
+
+    [Route("sumary-purchase")]
+    public async Task<IActionResult> PurchaseSummary()
+    {
+        return View(await _orderQueries.GetShoppingCartClient(ClientId));
+    }
+
+    [HttpPost]
+    [Route("start-order")]
+    public async Task<IActionResult> StartOrder(ShoppingCartDTO shoppingCartDto)
+    {
+        var shoppingCart = await _orderQueries.GetShoppingCartClient(ClientId);
+
+        if(shoppingCart is null)
+            return BadRequest();
+
+        var command = new StartOrderCommand (
+            shoppingCart.OrderId, 
+            ClientId, 
+            shoppingCart.TotalValue, 
+            shoppingCartDto.Payment.CardName,
+            shoppingCartDto.Payment.CardNumber, 
+            shoppingCartDto.Payment.CardExpiration, 
+            shoppingCartDto.Payment.CardCvv
+        );
+
+        await _mediatorHandler.SendCommand(command);
+
+        if (IsOperatonValid())
+        {
+            return RedirectToAction("Index", "Order");
+        }
+
+        return View("PurchaseSummary", await _orderQueries.GetShoppingCartClient(ClientId));
     }
 }

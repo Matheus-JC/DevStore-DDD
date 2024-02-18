@@ -1,5 +1,6 @@
 using DevStore.Catalog.Application.Mappings;
 using DevStore.Catalog.Data;
+using DevStore.Payment.Data;
 using DevStore.Sales.Data;
 using DevStore.WebApp.VirtualStore.Configurations;
 using DevStore.WebApp.VirtualStore.Data;
@@ -19,6 +20,9 @@ builder.Services.AddDbContext<CatalogContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDbContext<SalesContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<PaymentContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

@@ -7,8 +7,8 @@ public class ApplyOrderVoucherValidation : AbstractValidator<ApplyOrderVoucherCo
     public ApplyOrderVoucherValidation()
     {
         RuleFor(c => c.ClientId)
-                .NotEqual(Guid.Empty)
-                .WithMessage("Invalid client id");
+            .NotEqual(Guid.Empty)
+            .WithMessage("Invalid client id");
 
         RuleFor(c => c.VoucherCode)
             .NotEmpty()

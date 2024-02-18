@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.8.0" />
-    <PackageReference Include="Mediatr" Version="12.2.0" />
+    <ProjectReference Include="..\DevStore.Payment.Business\DevStore.Payment.Business.csproj" />
   </ItemGroup>
 
 </Project>
