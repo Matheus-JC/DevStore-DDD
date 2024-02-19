@@ -37,7 +37,6 @@ public class RemoveOrderItemHandler(
 
         order.RemoveItem(orderItem);
 
-        order.AddEvent(new OrderUpdatedEvent(order.Id, message.ClientId, order.TotalValue));
         order.AddEvent(new OrderItemRemovedEvent(order.Id, message.ClientId, message.ProductId));
 
         _orderRepository.RemoveItem(orderItem);

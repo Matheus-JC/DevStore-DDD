@@ -34,6 +34,8 @@ using DevStore.Sales.Application.Events.PaymentRefused;
 using DevStore.Payment.Business.Events;
 using DevStore.Sales.Application.Events.VoucherApplied;
 using DevStore.Sales.Application.Events.OrderFinalized;
+using EventSourcing;
+using DevStore.Common.Data.EventSourcing;
 
 namespace DevStore.WebApp.VirtualStore.Configurations;
 
@@ -46,6 +48,10 @@ public static class DependencyInjectionConfig
 
         // Notifications
         services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+
+        // Event Sourcing
+        services.AddSingleton<IEventStoreService, EventStoreService>();
+        services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
         // Catalog
         services.AddScoped<IProductRepository, ProductRepository>();

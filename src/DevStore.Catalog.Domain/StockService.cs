@@ -58,7 +58,7 @@ public class StockService(
 
         if (product.Stock < LowQuantityStock)
         {
-            await _mediatorHandler.PublishEvent(new LowStockProductEvent(product.Id, product.Stock));
+            await _mediatorHandler.PublishDomainEvent(new LowStockProductEvent(product.Id, product.Stock));
         }
 
         _productRepository.Update(product);

@@ -38,7 +38,6 @@ public class UpdateOrderItemHandler(
 
         order.UpdateUnits(orderItem, message.Quantity);
 
-        order.AddEvent(new OrderUpdatedEvent(order.Id, message.ClientId, order.TotalValue));
         order.AddEvent(new OrderItemUpdatedEvent(order.Id, message.ClientId, message.ProductId, message.Quantity));
 
         _orderRepository.UpdateItem(orderItem);

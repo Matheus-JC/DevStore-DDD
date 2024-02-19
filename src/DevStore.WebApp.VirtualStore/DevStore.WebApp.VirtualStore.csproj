@@ -27,6 +27,7 @@
     <ProjectReference Include="..\DevStore.Payment.Data\DevStore.Payment.Data.csproj" />
     <ProjectReference Include="..\DevStore.Sales.Application\DevStore.Sales.Application.csproj" />
     <ProjectReference Include="..\DevStore.Sales.Data\DevStore.Sales.Data.csproj" />
+    <ProjectReference Include="..\EventSourcing\EventSourcing.csproj" />
   </ItemGroup>
 
 </Project>

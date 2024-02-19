@@ -59,6 +59,7 @@ public class OrderQueries(IOrderRepository orderRepository) : IOrderQueries
         {
             ordersDto.Add(new OrderDTO
             {
+                Id = order.Id,
                 TotalValue = order.TotalValue,
                 OrderStatus = (int) order.OrderStatus,
                 Code = order.Code,

@@ -1,9 +1,14 @@
-﻿namespace DevStore.Common.Messages.CommonMessages.DomainEvents;
+﻿using MediatR;
 
-public class DomainEvent : Event
+namespace DevStore.Common.Messages.CommonMessages.DomainEvents;
+
+public abstract class DomainEvent : Message, INotification
 {
-    public DomainEvent(Guid aggregateId)
+    public DateTime Timestamp { get; private set; }
+
+    protected DomainEvent(Guid aggregateId)
     {
         AggregateId = aggregateId;
+        Timestamp = DateTime.Now;
     }
 }

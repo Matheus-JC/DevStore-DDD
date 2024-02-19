@@ -49,6 +49,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevStore.Payment.Data", "sr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Register", "Register", "{4575D34F-9348-4076-80D4-5DAB28D0889F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{26A30FEE-DF34-4045-A591-7EBCB8CB04D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "src\EventSourcing\EventSourcing.csproj", "{D611A9A0-F5F1-47E2-9954-339D24504954}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +111,10 @@ Global
 		{A6234EE9-44E0-4376-B715-AE1695E92FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6234EE9-44E0-4376-B715-AE1695E92FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6234EE9-44E0-4376-B715-AE1695E92FF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D611A9A0-F5F1-47E2-9954-339D24504954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D611A9A0-F5F1-47E2-9954-339D24504954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D611A9A0-F5F1-47E2-9954-339D24504954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D611A9A0-F5F1-47E2-9954-339D24504954}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +141,7 @@ Global
 		{9940BC61-2B07-4036-A5AB-B0AE5B166758} = {5C2F0028-1E53-43AE-85D8-747E41920596}
 		{A6234EE9-44E0-4376-B715-AE1695E92FF7} = {5C2F0028-1E53-43AE-85D8-747E41920596}
 		{4575D34F-9348-4076-80D4-5DAB28D0889F} = {7BB47E4F-1EDF-4D47-B7A4-1E8A9B346E0D}
+		{D611A9A0-F5F1-47E2-9954-339D24504954} = {26A30FEE-DF34-4045-A591-7EBCB8CB04D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C10CF44-4F2A-4AB1-B8BD-285654EB0B7A}

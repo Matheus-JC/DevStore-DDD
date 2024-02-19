@@ -43,8 +43,6 @@ public class AddOrderItemHandler(
             {
                 _orderRepository.AddItem(ordemItem);
             }
-
-            order.AddEvent(new OrderUpdatedEvent(order.Id, message.ClientId, order.TotalValue));
         }
 
         order.AddEvent(new OrderItemAddedEvent(order.Id, message.ClientId, message.ProductId, 
