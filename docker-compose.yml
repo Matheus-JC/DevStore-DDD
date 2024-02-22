@@ -1,0 +1,55 @@
+services:
+  application:
+    image: application_devstore:1.0
+    container_name: application_devstore
+    build:
+      context: .
+      dockerfile: src/DevStore.WebApp.VirtualStore/Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_URLS=http://*:8080
+
+  mssqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_devstore
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=A&5zv6EhK7
+      - MSSQL_TCP_PORT=1433
+    ports:
+      - 1433:1433
+    volumes:
+      - type: volume
+        source: mssqlserver-volume-data
+        target: /var/opt/mssql
+
+  event-store:
+    image: eventstore/eventstore:23.10.0-bookworm-slim
+    container_name: eventstore_devstore
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_RUN_PROJECTIONS=All
+      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+      - EVENTSTORE_EXT_TCP_PORT=1113
+      - EVENTSTORE_HTTP_PORT=2113
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_ENABLE_EXTERNAL_TCP=true
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+    ports:
+      - "1113:1113"
+      - "2113:2113"
+    volumes:
+      - type: volume
+        source: eventstore-volume-data
+        target: /var/lib/eventstore
+      - type: volume
+        source: eventstore-volume-logs
+        target: /var/log/eventstore
+
+volumes:
+  mssqlserver-volume-data:
+  eventstore-volume-data:
+  eventstore-volume-logs:

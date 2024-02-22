@@ -1,6 +1,5 @@
 ﻿using DevStore.Catalog.Domain.Tests.Fixtures;
 using DevStore.Common.Communication.Mediator;
-using DevStore.Common.Data;
 using DevStore.Common.Messages.CommonMessages.DomainEvents;
 using FluentAssertions;
 using Moq;
@@ -9,7 +8,7 @@ using Xunit;
 
 namespace DevStore.Catalog.Domain.Tests;
 
-public class StockServiceTests: IClassFixture<ProductFixture>
+public class StockServiceTests : IClassFixture<ProductFixture>
 {
     private readonly ProductFixture _productFixture;
     private readonly AutoMocker _mocker;
@@ -44,7 +43,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
 
         _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
         _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
-        _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishEvent(It.IsAny<DomainEvent>()), Times.Never);
+        _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishDomainEvent(It.IsAny<DomainEvent>()), Times.Never);
         _mocker.GetMock<ICatalogUnitOfWork>().Verify(r => r.Commit(), Times.Once);
     }
 
@@ -69,7 +68,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         product.Stock.Should().Be(StockService.LowQuantityStock - 5);
         _mocker.GetMock<IProductRepository>().Verify(r => r.GetById(product.Id), Times.Once);
         _mocker.GetMock<IProductRepository>().Verify(r => r.Update(product), Times.Once);
-        _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishEvent(It.IsAny<DomainEvent>()), Times.Once);
+        _mocker.GetMock<IMediatorHandler>().Verify(m => m.PublishDomainEvent(It.IsAny<DomainEvent>()), Times.Once);
         _mocker.GetMock<ICatalogUnitOfWork>().Verify(r => r.Commit(), Times.Once);
     }
 
@@ -79,7 +78,7 @@ public class StockServiceTests: IClassFixture<ProductFixture>
         // Arrange
         var product = _productFixture.CreateValidProductWithSpecifiedStock(stock: 15);
         var productInvalidId = Guid.NewGuid();
-        
+
         _mocker.GetMock<IProductRepository>().Setup(p => p.GetById(product.Id))
             .ReturnsAsync(product);
 

@@ -14,9 +14,9 @@ public class EventSourcingRepository(IEventStoreService eventStoreService) : IEv
     {
         var events = await _eventStoreService.GetConnection()
             .ReadStreamEventsForwardAsync(
-                stream: aggregateId.ToString(), 
-                start: 0, 
-                count: 500, 
+                stream: aggregateId.ToString(),
+                start: 0,
+                count: 500,
                 resolveLinkTos: false);
 
         var eventsList = new List<StoredEvent>();
